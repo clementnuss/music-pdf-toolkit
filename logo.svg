@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#4CAF50" stroke="#45a049" stroke-width="3"/>
+
+  <!-- Musical staff lines (left side) -->
+  <g stroke="#fff" stroke-width="2.5" opacity="0.9">
+    <line x1="25" y1="70" x2="120" y2="70"/>
+    <line x1="25" y1="85" x2="120" y2="85"/>
+    <line x1="25" y1="100" x2="120" y2="100"/>
+    <line x1="25" y1="115" x2="120" y2="115"/>
+    <line x1="25" y1="130" x2="120" y2="130"/>
+  </g>
+
+  <!-- Musical emoji as treble clef -->
+  <text x="50" y="115" font-size="50" text-anchor="middle">🎼</text>
+
+  <!-- Music notes on staff -->
+  <g fill="#fff" opacity="0.95">
+    <!-- First note -->
+    <ellipse cx="78" cy="108" rx="5" ry="3.5" transform="rotate(-20 78 108)"/>
+    <rect x="82.5" y="80" width="2.5" height="28"/>
+
+    <!-- Second note -->
+    <ellipse cx="95" cy="100" rx="5" ry="3.5" transform="rotate(-20 95 100)"/>
+    <rect x="99.5" y="72" width="2.5" height="28"/>
+
+    <!-- Beam connecting notes -->
+    <polygon points="85,80 102,72 102,75.5 85,83.5"/>
+  </g>
+
+  <!-- PDF pages icon (right side) - larger -->
+  <g transform="translate(118, 55)">
+    <!-- Back page (shadow) -->
+    <rect x="10" y="8" width="50" height="65" fill="#fff" opacity="0.4" rx="3"/>
+    <!-- Middle page (shadow) -->
+    <rect x="5" y="4" width="50" height="65" fill="#fff" opacity="0.6" rx="3"/>
+    <!-- Front page -->
+    <rect x="0" y="0" width="50" height="65" fill="#fff" rx="3"/>
+    <!-- PDF icon/lines -->
+    <g stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round">
+      <line x1="7" y1="12" x2="43" y2="12"/>
+      <line x1="7" y1="22" x2="43" y2="22"/>
+      <line x1="7" y1="32" x2="43" y2="32"/>
+      <line x1="7" y1="42" x2="36" y2="42"/>
+      <line x1="7" y1="52" x2="38" y2="52"/>
+    </g>
+    <!-- PDF corner fold -->
+    <path d="M 50 0 L 50 15 L 35 15 Z" fill="#e8e8e8"/>
+    <path d="M 50 15 L 35 15 L 50 0" fill="none" stroke="#ccc" stroke-width="1.5"/>
+  </g>
+</svg>

@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PartKit - Music PDF Tools</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <style>
     * {
       margin: 0;
@@ -25,6 +27,19 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      flex: 1;
     }
 
     h1 {
@@ -72,8 +87,11 @@
 </head>
 <body>
   <header>
-    <h1 data-i18n="main.title">PartKit</h1>
-    <p class="subtitle" data-i18n="main.subtitle">PDF tools for brass band musicians</p>
+    <img src="icon-192.png" alt="PartKit Logo" class="logo">
+    <div class="header-text">
+      <h1 data-i18n="main.title">PartKit</h1>
+      <p class="subtitle" data-i18n="main.subtitle">PDF tools for brass band musicians</p>
+    </div>
   </header>
 
   <div class="tools-grid">
