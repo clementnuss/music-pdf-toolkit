@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Merger - Music PDF Toolkit</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .upload-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .upload-area {
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 3rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 1rem;
+    }
+
+    .upload-area:hover {
+      border-color: #4CAF50;
+      background: #f9f9f9;
+    }
+
+    .upload-area.dragover {
+      border-color: #4CAF50;
+      background: #e8f5e9;
+    }
+
+    .upload-area.has-file {
+      border-color: #4CAF50;
+      background: #e8f5e9;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .processing {
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .processing.active {
+      display: block;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #4CAF50;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .preview-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .preview-section.active {
+      display: block;
+    }
+
+    .file-info {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .file-info strong {
+      color: #4CAF50;
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      justify-content: center;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .error.active {
+      display: block;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PDF Merger</h1>
+    <p class="subtitle">Merge one PDF (e.g., lyrics) with all other PDFs (e.g., instrument parts)</p>
+  </header>
+
+  <div class="upload-section">
+    <div class="section-title">Step 1: Upload the common PDF (lyrics, etc.)</div>
+    <div class="upload-area" id="commonUploadArea">
+      <div class="upload-icon">📄</div>
+      <p><strong>Drop common PDF here</strong> or click to browse</p>
+      <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+        This PDF will be added to all other PDFs
+      </p>
+      <input type="file" id="commonFileInput" accept=".pdf">
+    </div>
+    <div id="commonFileInfo" class="file-info" style="display: none;"></div>
+  </div>
+
+  <div class="upload-section">
+    <div class="section-title">Step 2: Upload the PDFs to merge with (or a ZIP file)</div>
+    <div class="upload-area" id="partsUploadArea">
+      <div class="upload-icon">📑</div>
+      <p><strong>Drop PDF files or ZIP here</strong> or click to browse</p>
+      <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+        Upload multiple PDF files or a ZIP containing PDFs
+      </p>
+      <input type="file" id="partsFileInput" accept=".pdf,.zip" multiple>
+    </div>
+  </div>
+
+  <div class="error" id="errorMessage"></div>
+
+  <div class="processing" id="processing">
+    <div class="spinner"></div>
+    <p>Merging PDFs...</p>
+  </div>
+
+  <div class="preview-section" id="previewSection">
+    <h2>Merged PDFs Ready</h2>
+    <div class="file-info">
+      <p><strong id="mergedCount">0</strong> PDFs merged successfully!</p>
+    </div>
+
+    <div class="download-buttons">
+      <button id="downloadAllBtn">Download All PDFs</button>
+      <button id="downloadZipBtn">Download as ZIP</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
