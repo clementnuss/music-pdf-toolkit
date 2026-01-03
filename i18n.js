@@ -76,6 +76,10 @@ const translations = {
     'assembler.total': 'Total:',
     'assembler.page': 'page',
     'assembler.pages': 'pages',
+
+    // Footer
+    'footer.star': 'Star on GitHub',
+    'footer.bug': 'Report Bug / Request Feature',
   },
 
   de: {
@@ -151,6 +155,10 @@ const translations = {
     'assembler.total': 'Gesamt:',
     'assembler.page': 'Seite',
     'assembler.pages': 'Seiten',
+
+    // Footer
+    'footer.star': 'Mit Stern auf GitHub markieren',
+    'footer.bug': 'Fehler melden / Funktion anfordern',
   },
 
   fr: {
@@ -226,6 +234,10 @@ const translations = {
     'assembler.total': 'Total :',
     'assembler.page': 'page',
     'assembler.pages': 'pages',
+
+    // Footer
+    'footer.star': 'Ajouter une étoile sur GitHub',
+    'footer.bug': 'Signaler un bug / Demander une fonctionnalité',
   }
 };
 
